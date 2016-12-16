@@ -40,6 +40,41 @@ describe('sequelize-json-schema', () => {
 
     });
 
+    it('should build definition for array column', () => {
+
+      let Simple = sequelize.define('simple', {
+        names: Sequelize.ARRAY(Sequelize.STRING),
+        ages: Sequelize.ARRAY(Sequelize.INTEGER),
+        biggerInt: Sequelize.ARRAY(Sequelize.BIGINT),
+        balances: Sequelize.ARRAY(Sequelize.DECIMAL)
+      });
+
+      let def = definition(Simple);
+
+      expect(def.properties.names).to.exist;
+      expect(def.properties.names.type).to.equal('array');
+      expect(def.properties.names.item).to.exist;
+      expect(def.properties.names.item).to.be.an('object');
+      expect(def.properties.names.item.type).to.equal('string');
+      expect(def.properties.ages).to.exist;
+      expect(def.properties.ages.type).to.equal('array');
+      expect(def.properties.ages.item).to.exist;
+      expect(def.properties.ages.item).to.be.an('object');
+      expect(def.properties.ages.item.type).to.equal('integer');
+      expect(def.properties.ages.item.format).to.equal('int32');
+      expect(def.properties.biggerInt).to.exist;
+      expect(def.properties.biggerInt.type).to.equal('array');
+      expect(def.properties.biggerInt.item).to.exist;
+      expect(def.properties.biggerInt.item).to.be.an('object');
+      expect(def.properties.biggerInt.item.type).to.equal('integer');
+      expect(def.properties.biggerInt.item.format).to.equal('int64');
+      expect(def.properties.balances).to.exist;
+      expect(def.properties.balances.type).to.equal('array');
+      expect(def.properties.balances.item).to.exist;
+      expect(def.properties.balances.item).to.be.an('object');
+      expect(def.properties.balances.item.type).to.equal('number');
+    });
+
     it('should build definition for simple model excluding private columns', () => {
 
       let Simple = sequelize.define('simple', {

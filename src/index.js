@@ -53,6 +53,15 @@ let property = attribute => {
     return type.returnType ? property({ type: type.returnType }) : { type: 'string' };
   }
 
+  if (type instanceof Sequelize.DataTypes.ARRAY) {
+    return {
+      type: 'array',
+      item: property({
+        type: type.type
+      })
+    };
+  }
+
   // Need suport for the following
   // HSTORE
   // NOW
