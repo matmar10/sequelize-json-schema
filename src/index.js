@@ -67,7 +67,6 @@ let property = attribute => {
   // NOW
   // BLOB
   // RANGE
-  // ARRAY
   // GEOMETRY
   // GEOGRAPHY
 
